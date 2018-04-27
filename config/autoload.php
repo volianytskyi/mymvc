@@ -2,7 +2,8 @@
 
 function classRegister($class)
 {
-  $classFile = '';
+  $classFile = __DIR__ . '/../app/' . $class . '.php';
+  
   if(preg_match('~.*Model$~', $class))
   {
     $classFile = __DIR__ . '/../app/models/' . $class . '.php';
@@ -15,7 +16,7 @@ function classRegister($class)
   {
     $classFile = __DIR__ . '/../app/controllers/' . $class . '.php';
   }
-  
+
   if(file_exists($classFile))
   {
     require_once($classFile);

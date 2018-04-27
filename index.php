@@ -7,9 +7,9 @@ if(DEBUG === true)
 }
 
 require_once __DIR__ . '/config/autoload.php';
-$m = new IndexModel();
-$c = new IndexController();
-$v = new IndexView();
+
+$route = new Route();
+$route->run();
 
 
 
