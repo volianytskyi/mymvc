@@ -30,13 +30,18 @@ class Route
   {
 
     $uri = $this->getRequestUri();
-    $segments = explode('/', $uri);
-    $controllerName = array_shift($segments);
-    if(!isset($this->routes[$controllerName]))
+
+    foreach ($this->routes as $pattern => $action)
     {
-      echo '404';
+      if(preg_match("~$pattern~", $uri))
+      {
+        $innerRoute = preg_replace("~$pattern~", $action, $uri);
+        $segments = explode('/', $uri);
+        $controllerName = array_shift($segments);
+        break;
+      }
     }
-    $controller = new ucfirst($controllerName) . 'Controller'();
+    //$controller = new ucfirst($controllerName) . 'Controller'();
 
 
   }
