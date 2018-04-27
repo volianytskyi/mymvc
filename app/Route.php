@@ -17,9 +17,28 @@ class Route
     }
   }
 
+  private function getRequestUri()
+  {
+    if(!empty($_SERVER['REQUEST_URI']))
+    {
+        return trim($_SERVER['REQUEST_URI'], '/');
+    }
+    return null;
+  }
+
   public function run()
   {
-    print_r($this->routes);
+
+    $uri = $this->getRequestUri();
+    $segments = explode('/', $uri);
+    $controllerName = array_shift($segments);
+    if(!isset($this->routes[$controllerName]))
+    {
+      echo '404';
+    }
+    $controller = new ucfirst($controllerName) . 'Controller'();
+
+
   }
 }
 
