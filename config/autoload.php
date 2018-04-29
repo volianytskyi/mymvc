@@ -3,16 +3,16 @@
 function classRegister($class)
 {
   $classFile = __DIR__ . '/../app/' . $class . '.php';
-  
-  if(preg_match('~.*Model$~', $class))
+
+  if(preg_match('~.+Model$~', $class))
   {
     $classFile = __DIR__ . '/../app/models/' . $class . '.php';
   }
-  elseif (preg_match('~.*View$~', $class))
+  elseif (preg_match('~.+View$~', $class))
   {
     $classFile = __DIR__ . '/../app/views/' . $class . '.php';
   }
-  elseif (preg_match('~.*Controller$~', $class))
+  elseif (preg_match('~.+Controller$~', $class))
   {
     $classFile = __DIR__ . '/../app/controllers/' . $class . '.php';
   }

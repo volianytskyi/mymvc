@@ -31,17 +31,34 @@ class Route
 
     $uri = $this->getRequestUri();
 
+    $routeExists = false;
     foreach ($this->routes as $pattern => $action)
     {
       if(preg_match("~$pattern~", $uri))
       {
         $innerRoute = preg_replace("~$pattern~", $action, $uri);
-        $segments = explode('/', $uri);
-        $controllerName = array_shift($segments);
-        break;
+        $innerRouteParts = explode('/', $innerRoute);
+        $controllerName = ucfirst(array_shift($innerRouteParts)) . 'Controller';
+        $controller = new $controllerName();
+
+        $action = 'action' . ucfirst(array_shift($innerRouteParts));
+
+        $params = $innerRouteParts;
+        $result = call_user_func_array([$controller, $action], $params);
+        $routeExists = true;
+        if($result !== false)
+        {
+          break;
+        }
+
       }
     }
-    //$controller = new ucfirst($controllerName) . 'Controller'();
+    if(!$routeExists)
+    {
+      $controller = new Page404Controller();
+      $controller->showPage404();
+    }
+
 
 
   }
